@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madagascar GreenWorks | Waste to Wealth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Earthy Harmony -->
+    <!-- Application Structure Plan: A thematic, single-page narrative structure was chosen to guide users logically from the problem to the solution and its impact. This storytelling approach is more engaging for potential investors, NGOs, and partners than a static dashboard. The flow starts with a powerful hero section, defines the core challenges, presents the app as the solution, details its features through an interactive tabbed interface, visualizes the potential impact with dynamic charts, and ends with a clear call to action. This structure prioritizes user understanding and persuasion over a literal translation of the report's layout. -->
+    <!-- Visualization & Content Choices: The application uses a mix of presentation methods to achieve its goals. For informing on the problems, animated stats create urgency. For organizing and explaining the app's features, an interactive tabbed diagram simplifies complex workflows. For comparing and persuading stakeholders of the app's potential, dynamic Chart.js bar and line charts visualize impact and growth. All choices avoid static data presentation in favor of interactive, easily digestible formats, confirming no SVG/Mermaid is used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F4; /* warm off-white */
+            color: #292524; /* dark charcoal */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 384px;
+            }
+        }
+        .tab-active {
+            background-color: #4D7C0F;
+            color: #FFFFFF;
+            border-color: #4D7C0F;
+        }
+        .tab-inactive {
+            background-color: #E5E7EB;
+            color: #374151;
+            border-color: transparent;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Hero Section -->
+    <header class="bg-white shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-lime-800">
+                Madagascar <span class="text-lime-600">GreenWorks</span>
+            </div>
+            <a href="#contact" class="bg-lime-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-lime-800 transition-colors">Get Involved</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="text-center py-20 px-6 bg-stone-100">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-stone-800 mb-4">Transforming Waste into Wealth.</h1>
+            <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto">
+                A community-driven mobile solution to tackle poverty, unemployment, and waste in Madagascar by creating a sustainable circular economy.
+            </p>
+        </section>
+
+        <!-- The Challenge Section -->
+        <section id="challenge" class="py-16 sm:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">The Interconnected Challenge</h2>
+                    <p class="mt-4 text-lg text-stone-600">Madagascar faces critical hurdles that require an integrated solution.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-xl shadow-lg animate-on-scroll">
+                        <div class="text-5xl mb-4 text-amber-500">💰</div>
+                        <h3 class="text-2xl font-bold mb-2">Poverty & Unemployment</h3>
+                        <p class="text-stone-600">A significant portion of the population lacks access to stable income, creating a desperate need for accessible work opportunities.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg animate-on-scroll">
+                        <div class="text-5xl mb-4 text-lime-600">🌿</div>
+                        <h3 class="text-2xl font-bold mb-2">Waste & Environment</h3>
+                        <p class="text-stone-600">Unmanaged waste pollutes communities, posing serious health and environmental risks. Formal collection systems are often inadequate.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg animate-on-scroll">
+                        <div class="text-5xl mb-4 text-blue-500">🏗️</div>
+                        <h3 class="text-2xl font-bold mb-2">Infrastructure Gaps</h3>
+                        <p class="text-stone-600">Limited formal job markets and waste processing facilities mean innovative, decentralized solutions are essential for progress.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Solution Section -->
+        <section id="solution" class="bg-lime-800 text-white py-16 sm:py-24">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold">Our Solution: The GreenWorks App</h2>
+                 <p class="mt-4 text-lg text-lime-200 max-w-4xl mx-auto">Madagascar GreenWorks is a mobile platform designed to create a self-sustaining ecosystem. It connects people, turns waste into a resource, and empowers communities through technology.</p>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-16 sm:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">How It Works</h2>
+                    <p class="mt-4 text-lg text-stone-600">A simple, four-part system designed for maximum community impact.</p>
+                </div>
+
+                <!-- Tabs -->
+                <div id="tabs-container" class="mb-8 flex flex-wrap justify-center gap-2">
+                    <button data-tab="tab1" class="tab-btn tab-active font-semibold py-2 px-4 rounded-lg transition-colors border-2">1. Collection Marketplace</button>
+                    <button data-tab="tab2" class="tab-btn tab-inactive font-semibold py-2 px-4 rounded-lg transition-colors border-2">2. Recycling Hub</button>
+                    <button data-tab="tab3" class="tab-btn tab-inactive font-semibold py-2 px-4 rounded-lg transition-colors border-2">3. Community Action</button>
+                    <button data-tab="tab4" class="tab-btn tab-inactive font-semibold py-2 px-4 rounded-lg transition-colors border-2">4. Job & Skill Board</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div id="tabs-content" class="bg-white p-8 rounded-xl shadow-lg min-h-[350px]">
+                    <div id="tab1" class="tab-content animate-on-scroll">
+                        <h3 class="text-2xl font-bold mb-4">Waste Collection & Sorting Marketplace</h3>
+                        <p class="text-stone-600 mb-6">This is the core of the app. Households and businesses can request pickups for sorted waste. Registered "Green Collectors" accept these jobs, earn income via mobile money, and ensure waste reaches the right destination.</p>
+                        <div class="flex flex-col md:flex-row items-center justify-around gap-4 text-center font-semibold">
+                            <div class="p-4 rounded-lg bg-stone-100">🏡 <br>Household Requests Pickup</div>
+                            <div class="text-2xl text-lime-600 font-mono">→</div>
+                             <div class="p-4 rounded-lg bg-stone-100">🏃‍♂️ <br>Collector Accepts Job</div>
+                            <div class="text-2xl text-lime-600 font-mono">→</div>
+                             <div class="p-4 rounded-lg bg-stone-100">♻️ <br>Waste Delivered</div>
+                             <div class="text-2xl text-lime-600 font-mono">→</div>
+                              <div class="p-4 rounded-lg bg-stone-100">💳 <br>Collector Gets Paid</div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab-content hidden animate-on-scroll">
+                         <h3 class="text-2xl font-bold mb-4">Recycling & Upcycling Hub</h3>
+                        <p class="text-stone-600 mb-6">We extend the value chain by connecting collectors with artisans and businesses who need recyclable materials. The hub includes a marketplace to sell upcycled goods and educational resources to foster entrepreneurship.</p>
+                        <div class="flex items-center justify-around gap-4 text-center text-lg">
+                           <div>
+                               <span class="text-3xl block">🔨</span>
+                               <span class="font-bold">Create</span>
+                           </div>
+                            <div>
+                               <span class="text-3xl block">📚</span>
+                               <span class="font-bold">Learn</span>
+                           </div>
+                            <div>
+                               <span class="text-3xl block">🛒</span>
+                               <span class="font-bold">Sell</span>
+                           </div>
+                        </div>
+                    </div>
+                    <div id="tab3" class="tab-content hidden animate-on-scroll">
+                         <h3 class="text-2xl font-bold mb-4">Community Clean-up Initiatives</h3>
+                        <p class="text-stone-600 mb-6">Empowers communities to take collective action. Users can organize, join, and promote local clean-up events. Gamification elements like leaderboards and badges encourage participation and build community spirit.</p>
+                         <div class="flex items-center justify-around gap-4 text-center text-lg">
+                           <div>
+                               <span class="text-3xl block">📣</span>
+                               <span class="font-bold">Organize</span>
+                           </div>
+                            <div>
+                               <span class="text-3xl block">🤝</span>
+                               <span class="font-bold">Volunteer</span>
+                           </div>
+                            <div>
+                               <span class="text-3xl block">🏆</span>
+                               <span class="font-bold">Achieve</span>
+                           </div>
+                        </div>
+                    </div>
+                    <div id="tab4" class="tab-content hidden animate-on-scroll">
+                        <h3 class="text-2xl font-bold mb-4">Job Board & Skill Development</h3>
+                        <p class="text-stone-600 mb-6">Beyond waste collection, the app features a localized job board for other informal and temporary work. It also connects users to free vocational training resources, promoting a flexible "gig economy" and continuous skill enhancement.</p>
+                        <div class="flex items-center justify-around gap-4 text-center text-lg">
+                           <div>
+                               <span class="text-3xl block">🛠️</span>
+                               <span class="font-bold">Find Work</span>
+                           </div>
+                            <div>
+                               <span class="text-3xl block">📈</span>
+                               <span class="font-bold">Gain Skills</span>
+                           </div>
+                            <div>
+                               <span class="text-3xl block">💼</span>
+                               <span class="font-bold">Build a Career</span>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Impact Section -->
+        <section id="impact" class="py-16 sm:py-24 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Visualizing the Impact</h2>
+                    <p class="mt-4 text-lg text-stone-600">Our projections show a powerful positive change for communities and the environment.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="bg-white p-8 rounded-xl shadow-lg animate-on-scroll">
+                        <h3 class="text-2xl font-bold text-center mb-4">Potential Annual Impact</h3>
+                        <div class="chart-container">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg animate-on-scroll">
+                        <h3 class="text-2xl font-bold text-center mb-4">Projected User Growth (3 Years)</h3>
+                        <div class="chart-container">
+                             <canvas id="growthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Technical Approach -->
+        <section id="tech" class="py-16 sm:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">Built for Madagascar</h2>
+                    <p class="mt-4 text-lg text-stone-600">Our technical approach is tailored for accessibility and reliability.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-center">
+                    <div class="animate-on-scroll">
+                        <div class="text-4xl bg-lime-100 text-lime-700 w-20 h-20 mx-auto rounded-full flex items-center justify-center">📶</div>
+                        <h4 class="font-bold mt-4">Offline First</h4>
+                        <p class="text-sm text-stone-600">Core features work without a constant internet connection.</p>
+                    </div>
+                     <div class="animate-on-scroll">
+                        <div class="text-4xl bg-lime-100 text-lime-700 w-20 h-20 mx-auto rounded-full flex items-center justify-center">💨</div>
+                        <h4 class="font-bold mt-4">Low Data Usage</h4>
+                        <p class="text-sm text-stone-600">Lightweight design to be affordable for everyone.</p>
+                    </div>
+                     <div class="animate-on-scroll">
+                        <div class="text-4xl bg-lime-100 text-lime-700 w-20 h-20 mx-auto rounded-full flex items-center justify-center">📱</div>
+                        <h4 class="font-bold mt-4">Simple Interface</h4>
+                        <p class="text-sm text-stone-600">Intuitive and visual for all levels of digital literacy.</p>
+                    </div>
+                     <div class="animate-on-scroll">
+                        <div class="text-4xl bg-lime-100 text-lime-700 w-20 h-20 mx-auto rounded-full flex items-center justify-center">🔒</div>
+                        <h4 class="font-bold mt-4">Secure & Trusted</h4>
+                        <p class="text-sm text-stone-600">User verification and secure mobile money payments.</p>
+                    </div>
+                     <div class="animate-on-scroll">
+                        <div class="text-4xl bg-lime-100 text-lime-700 w-20 h-20 mx-auto rounded-full flex items-center justify-center">💬</div>
+                        <h4 class="font-bold mt-4">SMS/USSD Ready</h4>
+                        <p class="text-sm text-stone-600">Integration for users without smartphones.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-stone-800 text-white">
+        <div class="container mx-auto py-12 px-6 text-center">
+            <h2 class="text-3xl font-bold">Join Us in Building a Cleaner, More Prosperous Madagascar.</h2>
+            <p class="mt-4 mb-8 max-w-2xl mx-auto">We are seeking partners, investors, and community leaders. If you believe in our mission, let's connect.</p>
+            <a href="mailto:contact@madagascargreenworks.org" class="bg-lime-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-lime-700 transition-colors text-lg">Contact Us</a>
+        </div>
+        <div class="border-t border-stone-700 py-4 text-center text-stone-400 text-sm">
+            <p>&copy; 2025 Madagascar GreenWorks. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Tab functionality
+    const tabsContainer = document.getElementById('tabs-container');
+    const tabsContent = document.getElementById('tabs-content');
+    const tabButtons = tabsContainer.querySelectorAll('.tab-btn');
+    const tabContents = tabsContent.querySelectorAll('.tab-content');
+
+    tabsContainer.addEventListener('click', (e) => {
+        const clickedButton = e.target.closest('.tab-btn');
+        if (!clickedButton) return;
+
+        const tabId = clickedButton.dataset.tab;
+
+        tabButtons.forEach(btn => {
+            btn.classList.remove('tab-active');
+            btn.classList.add('tab-inactive');
+        });
+        clickedButton.classList.add('tab-active');
+        clickedButton.classList.remove('tab-inactive');
+        
+        tabContents.forEach(content => {
+            if (content.id === tabId) {
+                content.classList.remove('hidden');
+            } else {
+                content.classList.add('hidden');
+            }
+        });
+    });
+
+    // Animation on scroll
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                if(entry.target.contains(document.getElementById('impactChart'))) {
+                   createImpactChart();
+                }
+                if(entry.target.contains(document.getElementById('growthChart'))) {
+                   createGrowthChart();
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+    
+    // Chart.js implementation
+    let impactChartInstance;
+    function createImpactChart() {
+        if (impactChartInstance) return;
+        const ctx = document.getElementById('impactChart').getContext('2d');
+        impactChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jobs Created', 'Waste Recycled (Tons)', 'Economic Value (MGA)'],
+                datasets: [{
+                    label: 'Potential Impact',
+                    data: [5000, 25000, 1500000000],
+                    backgroundColor: [
+                        'rgba(37, 99, 235, 0.7)',
+                        'rgba(77, 124, 15, 0.7)',
+                        'rgba(234, 179, 8, 0.7)',
+                    ],
+                    borderColor: [
+                        'rgba(37, 99, 235, 1)',
+                        'rgba(77, 124, 15, 1)',
+                        'rgba(234, 179, 8, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                     if(context.label === 'Economic Value (MGA)'){
+                                        label += new Intl.NumberFormat('fr-MG', { style: 'currency', currency: 'MGA' }).format(context.parsed.y);
+                                     } else {
+                                        label += new Intl.NumberFormat().format(context.parsed.y);
+                                     }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                           callback: function(value, index, values) {
+                                if (value >= 1000000000) return (value / 1000000000) + 'B';
+                                if (value >= 1000000) return (value / 1000000) + 'M';
+                                if (value >= 1000) return (value / 1000) + 'K';
+                                return value;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    let growthChartInstance;
+    function createGrowthChart() {
+        if(growthChartInstance) return;
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        growthChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3'],
+                datasets: [{
+                    label: 'Green Collectors',
+                    data: [1200, 3500, 7800],
+                    borderColor: 'rgba(77, 124, 15, 1)',
+                    backgroundColor: 'rgba(77, 124, 15, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }, {
+                    label: 'Households Served',
+                    data: [15000, 45000, 110000],
+                    borderColor: 'rgba(37, 99, 235, 1)',
+                    backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                         callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat().format(context.parsed.y) + ' users';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                           callback: function(value, index, values) {
+                                return value >= 1000 ? (value / 1000) + 'K' : value;
+                           }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>
